@@ -1,0 +1,12 @@
+langchain>=0.3,<0.4
+langchain-openai>=0.2
+langchain-aws>=0.2
+langgraph>=0.2
+langsmith>=0.1
+slack-bolt>=1.20
+slack-sdk>=3.31
+google-api-python-client>=2.140
+google-auth>=2.30
+pydantic-settings>=2.4
+python-dotenv>=1.0
+pypdf>=4.0

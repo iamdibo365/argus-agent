@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+*.egg-info/
+credentials/
+service-account.json
+.DS_Store
+put_secrets.sh

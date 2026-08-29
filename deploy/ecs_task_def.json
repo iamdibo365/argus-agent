@@ -1,0 +1,43 @@
+{
+  "family": "argus-agent",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "REPLACE_WITH_EXECUTION_ROLE_ARN",
+  "taskRoleArn": "REPLACE_WITH_TASK_ROLE_ARN",
+  "containerDefinitions": [
+    {
+      "name": "argus",
+      "image": "REPLACE_WITH_IMAGE_URI",
+      "essential": true,
+      "environment": [
+        { "name": "LLM_PROVIDER", "value": "openai" },
+        { "name": "OPENAI_MODEL", "value": "gpt-4o" },
+        { "name": "AWS_REGION", "value": "us-east-2" },
+        { "name": "BEDROCK_MODEL_ID", "value": "us.anthropic.claude-3-5-sonnet-20241022-v2:0" },
+        { "name": "LANGSMITH_TRACING", "value": "true" },
+        { "name": "LANGSMITH_PROJECT", "value": "argus-agent" },
+        { "name": "GOOGLE_APPLICATION_CREDENTIALS", "value": "/tmp/service-account.json" },
+        { "name": "GOOGLE_DRIVE_FOLDER_ID", "value": "1MNC2Tm-dy8bPOFoUtOk39NxSZ0rzgvgV,1B9hNb1PfaR3HXEQbJWgpFmJCBekBKdjR" }
+      ],
+      "secrets": [
+        { "name": "OPENAI_API_KEY",    "valueFrom": "/argus/OPENAI_API_KEY" },
+        { "name": "LANGSMITH_API_KEY", "valueFrom": "/argus/LANGSMITH_API_KEY" },
+        { "name": "SLACK_BOT_TOKEN",   "valueFrom": "/argus/SLACK_BOT_TOKEN" },
+        { "name": "SLACK_APP_TOKEN",   "valueFrom": "/argus/SLACK_APP_TOKEN" },
+        { "name": "GOOGLE_SA_JSON",    "valueFrom": "/argus/GOOGLE_SA_JSON" }
+      ],
+      "entryPoint": ["sh", "-c"],
+      "command": ["printf '%s' \"$GOOGLE_SA_JSON\" > /tmp/service-account.json && python -m argus.app"],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/argus-agent",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "argus"
+        }
+      }
+    }
+  ]
+}
