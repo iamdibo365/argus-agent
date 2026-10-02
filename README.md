@@ -1,6 +1,6 @@
 # Argus — AI Agent for Slack + Google Drive on AWS
 
-Argus is a production-style single AI agent that lives in your Slack workspace and can
+Argus is a production single AI agent that lives in your Slack workspace and can
 search and read your Google Drive, summarize channel discussions, and post messages —
 built with **LangChain / LangGraph**, **OpenAI** (or **AWS Bedrock** via one env var),
 **LangSmith** tracing, and deployed as a container on **AWS ECS Fargate**.
